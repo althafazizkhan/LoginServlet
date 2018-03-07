@@ -16,14 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/register")
 public class register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-   
-    public register() {
-        super();
-        
-    }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
+	public register() {
+		super();
+
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String FRN = request.getParameter("FName");
@@ -32,43 +32,39 @@ public class register extends HttpServlet {
 		String UN = request.getParameter("USName");
 		String PW = request.getParameter("passwo");
 		String GN = request.getParameter("gender");
-		
+
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			
-	           Connection con = null;
-	           String conUrl = "jdbc:sqlserver://localhost\\SQLEXPRESS;databaseName=Registration;integratedSecurity=true";
-	           con = DriverManager.getConnection(conUrl);
-	           
 
-PreparedStatement ps=con.prepareStatement( "insert into dbo.register values(?,?,?,?,?,?)");
-	           
-ps.setString(1, FRN);
-ps.setString(2, LSM);
-ps.setString(3, UN);
-ps.setString(6, CTC);
-ps.setString(4, PW);
-ps.setString(5, GN);
+			Connection con = null;
+			String conUrl = "jdbc:sqlserver://localhost\\SQLEXPRESS;databaseName=Registration;integratedSecurity=true";
+			con = DriverManager.getConnection(conUrl);
 
-int i=ps.executeUpdate();  
-if(i>0) {
-	
-	out.println("Sucessfully Registered " );
-	  
-}
+			PreparedStatement ps = con.prepareStatement("insert into dbo.register values(?,?,?,?,?,?)");
 
-else {
-	
-	out.println("UNSucessful !!!! " );
-}
+			ps.setString(1, FRN);
+			ps.setString(2, LSM);
+			ps.setString(3, UN);
+			ps.setString(6, CTC);
+			ps.setString(4, PW);
+			ps.setString(5, GN);
 
+			int i = ps.executeUpdate();
+			if (i > 0) {
 
-		}
-		catch(Exception e) {
+				out.println("Sucessfully Registered ");
+
+			}
+
+			else {
+
+				out.println("UNSucessful !!!! ");
+			}
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-			
+
 	}
 
 }
